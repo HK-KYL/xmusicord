@@ -5,11 +5,8 @@ import asyncio
 import os
 import requests
 from collections import deque
-# from dotenv import load_dotenv
 
-# Load environment variables
-# load_dotenv()
-# TOKEN = os.getenv("DISCORD_TOKEN")  # Load token from .env file
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # Load token from .env file
 LYRICS_API = "https://api.lyrics.ovh/v1"  # Using Lyrics.ovh API
 
 intents = discord.Intents.default()
@@ -103,4 +100,4 @@ async def karaoke(ctx):
     """Toggle karaoke mode (masked lyrics)"""
     await ctx.send("Karaoke mode is not implemented yet!")
 
-bot.run(TOKEN)
+bot.run(DISCORD_TOKEN)
