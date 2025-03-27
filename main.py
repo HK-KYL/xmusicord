@@ -30,7 +30,7 @@ async def play_next(ctx):
     global vc
     if song_queue:  # Changed from queue to song_queue
         url, title = song_queue.popleft()
-        vc.play(discord.FFmpegPCMAudio(url, executable=ffmpeg_path), after=lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx), bot.loop))
+        vc.play(discord.FFmpegPCMAudio(url, executable=ffmpeg_path))
         await ctx.send(f'Now playing: {title}')
     else:
         await vc.disconnect()
