@@ -18,6 +18,7 @@ intents.message_content = True  # Required for command handling
 bot = commands.Bot(command_prefix="!", intents=intents)
 queue = deque()
 vc = None
+song_queue = deque()  # Renamed the queue to song_queue
 
 @bot.event
 async def on_ready():
@@ -25,8 +26,8 @@ async def on_ready():
 
 async def play_next(ctx):
     global vc
-    if queue:
-        url, title = queue.popleft()
+    if song_queue:  # Changed from queue to song_queue
+        url, title = song_queue.popleft()
         vc.play(discord.FFmpegPCMAudio(url), after=lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx), bot.loop))
         await ctx.send(f'Now playing: {title}')
     else:
@@ -36,7 +37,6 @@ async def play_next(ctx):
 @bot.command()
 async def play(ctx, *, query: str):
     """Play a song from YouTube by keyword or URL"""
-    print(f"Received play command for: {query}")  # Debugging statement
     global vc
     voice_channel = ctx.author.voice.channel
     if not voice_channel:
@@ -52,7 +52,7 @@ async def play(ctx, *, query: str):
         url = info['url']
         title = info['title']
     
-    queue.append((url, title))
+    song_queue.append((url, title))  # Changed from queue.append to song_queue.append
     if not vc.is_playing():
         await play_next(ctx)
     else:
@@ -68,8 +68,8 @@ async def skip(ctx):
 @bot.command()
 async def queue(ctx):
     """Show the song queue"""
-    if queue:
-        queue_list = '\n'.join([f'{i+1}. {title}' for i, (_, title) in enumerate(queue)])
+    if song_queue:  # Changed from queue to song_queue
+        queue_list = '\n'.join([f'{i+1}. {title}' for i, (_, title) in enumerate(song_queue)])
         await ctx.send(f'Queue:\n{queue_list}')
     else:
         await ctx.send("Queue is empty!")
@@ -81,7 +81,7 @@ async def stop(ctx):
     if vc:
         await vc.disconnect()
         vc = None
-        queue.clear()
+        song_queue.clear()
         await ctx.send("Stopped playback and disconnected!")
 
 @bot.command()
@@ -91,7 +91,7 @@ async def lyrics(ctx):
         await ctx.send("No song is currently playing!")
         return
     
-    current_song = queue[0][1] if queue else "Unknown"
+    current_song = song_queue[0][1] if song_queue else "Unknown"
     artist, title = current_song.split(" - ", 1) if " - " in current_song else ("", current_song)
     response = requests.get(f'{LYRICS_API}/{artist}/{title}')
     if response.status_code == 200:
