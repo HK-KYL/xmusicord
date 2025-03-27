@@ -1,5 +1,4 @@
 discord.py
 yt-dlp
 requests
-ffmpeg-static
 PyNaCl
