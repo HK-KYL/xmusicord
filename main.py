@@ -8,8 +8,8 @@ from collections import deque
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")  # Load token from .env file
+# load_dotenv()
+# TOKEN = os.getenv("DISCORD_TOKEN")  # Load token from .env file
 LYRICS_API = "https://api.lyrics.ovh/v1"  # Using Lyrics.ovh API
 
 intents = discord.Intents.default()
