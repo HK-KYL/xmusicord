@@ -36,6 +36,7 @@ async def play_next(ctx):
 @bot.command()
 async def play(ctx, *, query: str):
     """Play a song from YouTube by keyword or URL"""
+    print(f"Received play command for: {query}")  # Debugging statement
     global vc
     voice_channel = ctx.author.voice.channel
     if not voice_channel:
