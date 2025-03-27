@@ -7,7 +7,7 @@ import requests
 from collections import deque
 from discord import FFmpegPCMAudio
 
-ffmpeg_path = './ffmpeg/ffmpeg'  # Path to the uploaded FFmpeg executable
+ffmpeg_path = '/app/ffmpeg/ffmpeg'  # Path to the uploaded FFmpeg executable
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # Load token from .env file
 if DISCORD_TOKEN is None:
