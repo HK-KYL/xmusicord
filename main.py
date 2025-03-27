@@ -16,9 +16,8 @@ LYRICS_API = "https://api.lyrics.ovh/v1"  # Using Lyrics.ovh API
 intents = discord.Intents.default()
 intents.message_content = True  # Required for command handling
 bot = commands.Bot(command_prefix="!", intents=intents)
-queue = deque()
-vc = None
 song_queue = deque()  # Renamed the queue to song_queue
+vc = None
 
 @bot.event
 async def on_ready():
