@@ -7,6 +7,10 @@ import requests
 from collections import deque
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")  # Load token from .env file
+if DISCORD_TOKEN is None:
+    print("Error: DISCORD_TOKEN is not set. Check your Railway environment variables!")
+    exit(1)
+
 LYRICS_API = "https://api.lyrics.ovh/v1"  # Using Lyrics.ovh API
 
 intents = discord.Intents.default()
